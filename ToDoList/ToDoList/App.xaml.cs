@@ -7,11 +7,22 @@ using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using ToDoList.Resources;
+using Microsoft.WindowsAzure.MobileServices;
 
 namespace ToDoList
 {
+    
+
     public partial class App : Application
     {
+       // public static MobileServiceClient MobileService = new MobileServiceClient(
+       //   "http://192.168.1.106:54321"
+//);
+        // Use this constructor instead after publishing to the cloud
+         public static MobileServiceClient MobileService = new MobileServiceClient(
+              "https://kidslist.azure-mobile.net/",
+              "LIvhiOaaECUZQfozduynGmJGyhazay72"
+        );
         /// <summary>
         /// Provides easy access to the root frame of the Phone Application.
         /// </summary>

@@ -8,34 +8,78 @@ using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using ToDoList.Resources;
+using Microsoft.WindowsAzure.MobileServices;
+using System.Collections.ObjectModel;
 
 namespace ToDoList
 {
-    public partial class MainPage : PhoneApplicationPage
+    public class PARENTS
     {
-        // Constructor
+        public int ID { get; set; }
+
+        public string NAME { get; set; }
+
+        public char USERNAME { get; set; }
+        public char PASSWORD { get; set; }
+    }
+
+    public sealed partial class MainPage : PhoneApplicationPage
+    {
+        private MobileServiceCollection<PARENTS, PARENTS> items;
+        private IMobileServiceTable<PARENTS> todoTable =
+            App.MobileService.GetTable<PARENTS>();
         public MainPage()
         {
-            InitializeComponent();
-
-            // Sample code to localize the ApplicationBar
-            //BuildLocalizedApplicationBar();
+            this.InitializeComponent();
+        }
+        private async void InsertTodoItem(PARENTS parent)
+        {
+            await todoTable.InsertAsync(parent);
+            items.Add(parent);
+        }
+        
+        private async void UpdateCheckedTodoItem(PARENTS item)
+        {
+            await todoTable.UpdateAsync(item);
         }
 
-        // Sample code for building a localized ApplicationBar
-        //private void BuildLocalizedApplicationBar()
-        //{
-        //    // Set the page's ApplicationBar to a new instance of ApplicationBar.
-        //    ApplicationBar = new ApplicationBar();
+        private void test_Click(object sender, RoutedEventArgs e)
+        {
+            int nummer = 2;
+            var todoItem = new PARENTS { ID = nummer, NAME = tekst.Text};
+           
+            InsertTodoItem(todoItem);
+        }
 
-        //    // Create a new button and set the text value to the localized string from AppResources.
-        //    ApplicationBarIconButton appBarButton = new ApplicationBarIconButton(new Uri("/Assets/AppBar/appbar.add.rest.png", UriKind.Relative));
-        //    appBarButton.Text = AppResources.AppBarButtonText;
-        //    ApplicationBar.Buttons.Add(appBarButton);
 
-        //    // Create a new menu item with the localized string from AppResources.
-        //    ApplicationBarMenuItem appBarMenuItem = new ApplicationBarMenuItem(AppResources.AppBarMenuItemText);
-        //    ApplicationBar.MenuItems.Add(appBarMenuItem);
-        //}
+
+
+
+
+       /* private MobileServiceCollection<PARENTS, PARENTS> items;
+        MobileServiceClient client = new MobileServiceClient(
+            "https://kidslist.azure-mobile.net/",
+           "LIvhiOaaECUZQfozduynGmJGyhazay72"
+            );
+
+        IMobileServiceTable<PARENTS> parents = App.MobileService.GetTable<PARENTS>();
+ 
+        public MainPage()
+        {
+            this.InitializeComponent();
+        }
+
+        private void test_Click(object sender, RoutedEventArgs e)
+        {
+ 
+            var parent = new PARENTS { NAME = "naam"};
+            InsertTodoItem(parent);
+        }
+        private async void InsertTodoItem(PARENTS parent)
+        {
+            await parents.InsertAsync(parent);
+            items.Add(parent);
+        }*/
+
     }
 }
