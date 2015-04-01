@@ -18,8 +18,8 @@ namespace KidsList
 {
     sealed partial class MainPage: Page
     {
-        private MobileServiceCollection<Todoitem, Todoitem> items;
-        private IMobileServiceTable<Todoitem> todoTable = App.MobileService.GetTable<Todoitem>();
+        private MobileServiceCollection<TodoItem, TodoItem> items;
+        private IMobileServiceTable<TodoItem> todoTable = App.MobileService.GetTable<TodoItem>();
         //private IMobileServiceSyncTable<TodoItem> todoTable = App.MobileService.GetSyncTable<TodoItem>(); // offline sync
 
         public MainPage()
@@ -27,7 +27,7 @@ namespace KidsList
             this.InitializeComponent();
         }
 
-        private async Task InsertTodoItem(Todoitem todoItem)
+        private async Task InsertTodoItem(TodoItem todoItem)
         {
             // This code inserts a new TodoItem into the database. When the operation completes
             // and Mobile Services has assigned an Id, the item is added to the CollectionView
@@ -64,7 +64,7 @@ namespace KidsList
             }
         }
 
-        private async Task UpdateCheckedTodoItem(Todoitem item)
+        private async Task UpdateCheckedTodoItem(TodoItem item)
         {
             // This code takes a freshly completed TodoItem and updates the database. When the MobileService 
             // responds, the item is removed from the list 
@@ -87,16 +87,16 @@ namespace KidsList
 
         private async void ButtonSave_Click(object sender, RoutedEventArgs e)
         {
-            var todoItem = new Todoitem { Text = TextInput.Text };
+            var todoItem = new TodoItem { Text = TextInput.Text };
             await InsertTodoItem(todoItem);
         }
 
-        /*private async void CheckBoxComplete_Checked(object sender, RoutedEventArgs e)
+        private async void CheckBoxComplete_Checked(object sender, RoutedEventArgs e)
         {
             CheckBox cb = (CheckBox)sender;
-            Todoitem item = cb.DataContext as Todoitem;
+            TodoItem item = cb.DataContext as TodoItem;
             await UpdateCheckedTodoItem(item);
-        }*/
+        }
 
         protected override async void OnNavigatedTo(NavigationEventArgs e)
         {

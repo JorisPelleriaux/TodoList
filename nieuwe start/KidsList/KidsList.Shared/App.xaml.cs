@@ -26,14 +26,14 @@ namespace KidsList
 
         // This MobileServiceClient has been configured to communicate with your local
         // test project for debugging purposes.
-     //   public static MobileServiceClient MobileService = new MobileServiceClient(
-     //      "http://localhost:50522"
-      //  );
+        //public static MobileServiceClient MobileService = new MobileServiceClient(
+        //   "http://localhost:50522"
+        //);
 
         // This MobileServiceClient has been configured to communicate with your Mobile Service's url
         // and application key. You're all set to start working with your Mobile Service!
         public static MobileServiceClient MobileService = new MobileServiceClient(
-            "http://kidslist.azure-mobile.net/",
+            "https://kidslist.azure-mobile.net/",
             "LIvhiOaaECUZQfozduynGmJGyhazay72"
         );
 

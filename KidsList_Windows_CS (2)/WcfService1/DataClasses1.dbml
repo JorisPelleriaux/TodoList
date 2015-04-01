@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="KidsList_db" Class="DataClasses1DataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=ufx8mdp27c.database.windows.net;Initial Catalog=KidsList_db;User ID=Groep2B" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="KidsList_dbConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.CHILDREN" Member="CHILDRENs">
+    <Type Name="CHILDREN">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="NAME" Type="System.String" DbType="Char(15) NOT NULL" CanBeNull="false" />
+      <Column Name="USERNAME" Type="System.String" DbType="Char(15) NOT NULL" CanBeNull="false" />
+      <Column Name="PASSWORD" Type="System.String" DbType="Char(20) NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.LIST" Member="LISTs">
+    <Type Name="LIST">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="TASK" Type="System.String" DbType="Text NOT NULL" CanBeNull="false" UpdateCheck="Never" />
+    </Type>
+  </Table>
+  <Table Name="dbo.PARENTS" Member="PARENTs">
+    <Type Name="PARENT">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="NAME" Type="System.String" DbType="Char(15) NOT NULL" CanBeNull="false" />
+      <Column Name="EMAIL" Type="System.String" DbType="VarChar(320) NOT NULL" CanBeNull="false" />
+      <Column Name="PHONENUMBER" Type="System.String" DbType="Char(15)" CanBeNull="true" />
+      <Column Name="USERNAME" Type="System.String" DbType="Char(15) NOT NULL" CanBeNull="false" />
+      <Column Name="PASSWORD" Type="System.String" DbType="Char(20) NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+</Database>

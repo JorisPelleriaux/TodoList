@@ -19,10 +19,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KidsList.WindowsPhone", "Ki
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KidsListService", "KidsListService\KidsListService.csproj", "{209FA716-A7AD-4095-BD70-C8710FC66FA7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WcfService1", "WcfService1\WcfService1.csproj", "{DE79B455-F9B0-4FEF-9D58-3537D3C46C5B}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowsFormsApplication1", "WindowsFormsApplication1\WindowsFormsApplication1.csproj", "{DA7C8F06-9F0E-4708-B9B2-C0A4B9753022}"
-EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		KidsList\KidsList.Shared\KidsList.Shared.projitems*{bd50eca0-7f46-41e1-a407-56821f327b5b}*SharedItemsImports = 4
@@ -96,26 +92,6 @@ Global
 		{209FA716-A7AD-4095-BD70-C8710FC66FA7}.Release|ARM.ActiveCfg = Release|Any CPU
 		{209FA716-A7AD-4095-BD70-C8710FC66FA7}.Release|x64.ActiveCfg = Release|Any CPU
 		{209FA716-A7AD-4095-BD70-C8710FC66FA7}.Release|x86.ActiveCfg = Release|Any CPU
-		{DE79B455-F9B0-4FEF-9D58-3537D3C46C5B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DE79B455-F9B0-4FEF-9D58-3537D3C46C5B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DE79B455-F9B0-4FEF-9D58-3537D3C46C5B}.Debug|ARM.ActiveCfg = Debug|Any CPU
-		{DE79B455-F9B0-4FEF-9D58-3537D3C46C5B}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{DE79B455-F9B0-4FEF-9D58-3537D3C46C5B}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{DE79B455-F9B0-4FEF-9D58-3537D3C46C5B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DE79B455-F9B0-4FEF-9D58-3537D3C46C5B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{DE79B455-F9B0-4FEF-9D58-3537D3C46C5B}.Release|ARM.ActiveCfg = Release|Any CPU
-		{DE79B455-F9B0-4FEF-9D58-3537D3C46C5B}.Release|x64.ActiveCfg = Release|Any CPU
-		{DE79B455-F9B0-4FEF-9D58-3537D3C46C5B}.Release|x86.ActiveCfg = Release|Any CPU
-		{DA7C8F06-9F0E-4708-B9B2-C0A4B9753022}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DA7C8F06-9F0E-4708-B9B2-C0A4B9753022}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DA7C8F06-9F0E-4708-B9B2-C0A4B9753022}.Debug|ARM.ActiveCfg = Debug|Any CPU
-		{DA7C8F06-9F0E-4708-B9B2-C0A4B9753022}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{DA7C8F06-9F0E-4708-B9B2-C0A4B9753022}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{DA7C8F06-9F0E-4708-B9B2-C0A4B9753022}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DA7C8F06-9F0E-4708-B9B2-C0A4B9753022}.Release|Any CPU.Build.0 = Release|Any CPU
-		{DA7C8F06-9F0E-4708-B9B2-C0A4B9753022}.Release|ARM.ActiveCfg = Release|Any CPU
-		{DA7C8F06-9F0E-4708-B9B2-C0A4B9753022}.Release|x64.ActiveCfg = Release|Any CPU
-		{DA7C8F06-9F0E-4708-B9B2-C0A4B9753022}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
