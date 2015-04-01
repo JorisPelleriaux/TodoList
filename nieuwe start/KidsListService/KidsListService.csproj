@@ -185,7 +185,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\ParentController.cs" />
     <Compile Include="Controllers\TodoItemController.cs" />
+    <Compile Include="DataObjects\Parent.cs" />
     <Compile Include="DataObjects\TodoItem.cs" />
     <Compile Include="Models\KidsListContext.cs" />
     <Compile Include="ScheduledJobs\SampleJob.cs" />

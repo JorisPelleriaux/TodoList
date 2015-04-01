@@ -53,8 +53,15 @@ namespace WcfService1
         public List<LIST> GetAllTasks()
         {
             DataClasses1DataContext dc = new DataClasses1DataContext();
-            var Tasks = from t in dc.LISTs
-                           select t;
+
+            var Tasks =
+                from t in dc.LISTs
+                where t.ID[1]
+                select t;
+                           
+                           
+                           ;
+
 
             return Tasks.ToList();
         }
