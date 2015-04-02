@@ -20,7 +20,8 @@ namespace KidsList
     {
         private MobileServiceCollection<TodoItem, TodoItem> items;
         private IMobileServiceTable<TodoItem> todoTable = App.MobileService.GetTable<TodoItem>();
-        //private IMobileServiceSyncTable<TodoItem> todoTable = App.MobileService.GetSyncTable<TodoItem>(); // offline sync
+        private IMobileServiceTable<Parent> ParentTable = App.MobileService.GetTable<Parent>();
+       //private IMobileServiceSyncTable<TodoItem> todoTable = App.MobileService.GetSyncTable<TodoItem>(); // offline sync
 
         public MainPage()
         {
@@ -42,6 +43,7 @@ namespace KidsList
             MobileServiceInvalidOperationException exception = null;
             try
             {
+               
                 // This code refreshes the entries in the list view by querying the TodoItems table.
                 // The query excludes completed TodoItems
                 items = await todoTable
