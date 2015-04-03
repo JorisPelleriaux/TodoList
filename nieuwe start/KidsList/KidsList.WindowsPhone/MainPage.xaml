@@ -9,42 +9,45 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <!--LayoutRoot is the root grid where all page content is placed-->
-    <Grid>
+    <Grid x:Name="LayoutRoot" Background="Transparent">
         <Grid.RowDefinitions>
-            <RowDefinition>
-
-            </RowDefinition>
-            <RowDefinition>
-
-            </RowDefinition>
-            <RowDefinition>
-
-            </RowDefinition>
-            <RowDefinition>
-
-            </RowDefinition>
-            <RowDefinition>
-
-            </RowDefinition>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition></ColumnDefinition>
-            <ColumnDefinition></ColumnDefinition>
-            <ColumnDefinition></ColumnDefinition>
-        </Grid.ColumnDefinitions>
-        <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
-            <StackPanel HorizontalAlignment="Right">
-                <TextBox Height="5" Width="120" Name="username" Text="Username"></TextBox>
-                <PasswordBox Width="120" Height="5" Name="password"></PasswordBox>
+        <!--TitlePanel contains the name of the application and page title-->
+        <StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="0,18,0,18">
+            <TextBlock Text="KidsList" Style="{StaticResource TitleTextBlockStyle}" Margin="18,0"/>
+        </StackPanel>
 
-            </StackPanel>
-            <StackPanel VerticalAlignment="Top">
-                <Button Width="10" Click="Button_Click">Login</Button>
-                <Button Click="Button_Click_1">Register</Button>
-            </StackPanel>
-
+        <!--ContentPanel - place additional content here-->
+        <Grid x:Name="ContentPanel" Grid.Row="1" Margin="18,0,18,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="4*" />
+                <ColumnDefinition Width="2*" />
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Row="0" Grid.ColumnSpan="2" Style="{StaticResource BodyTextBlockStyle}" Text="Enter some text below and click Save to insert a new TodoItem item into your database" TextWrapping="Wrap"/>
+            <TextBox Grid.Row="1" Grid.Column="0" Name="TextInput" Text="" />
+            <Button Grid.Column="1" Name="ButtonSave" Click="ButtonSave_Click" IsEnabled="False" Margin="9.667,39,0,96.083" Grid.RowSpan="2">Save</Button>
+            <TextBlock Grid.Row="1" Style="{StaticResource BodyTextBlockStyle}" Text="Click refresh below to load the unfinished TodoItems from your database. Use the checkbox to complete and update your TodoItems" TextWrapping="Wrap" Margin="0,57.833,56.333,0.167" Grid.RowSpan="2"/>
+            <Button Grid.Row="3" Grid.ColumnSpan="2" Name="ButtonRefresh" Click="ButtonRefresh_Click" HorizontalAlignment="Stretch">Refresh</Button>
+            <ListView  Grid.Row="4" Grid.ColumnSpan="2" Name="ListItems">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <CheckBox Name="CheckBoxComplete" IsChecked="{Binding Complete, Mode=TwoWay}" Checked="CheckBoxComplete_Checked" Content="{Binding Text}" Margin="10,5" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <Button Content="register" HorizontalAlignment="Left" Margin="242,87.833,0,0" Grid.Row="1" VerticalAlignment="Top" Grid.ColumnSpan="2" Click="Button_Click"/>
         </Grid>
-
     </Grid>
 </Page>
