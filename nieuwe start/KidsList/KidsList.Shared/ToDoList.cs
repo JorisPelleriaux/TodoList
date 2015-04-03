@@ -13,22 +13,22 @@ using Windows.UI.Xaml.Navigation;
 // For more information, see: http://aka.ms/addofflinesync
 //using Microsoft.WindowsAzure.MobileServices.SQLiteStore;  // offline sync
 //using Microsoft.WindowsAzure.MobileServices.Sync;         // offline sync
-
+/*
 namespace KidsList
 {
-    sealed partial class MainPage: Page
-    {
-        
+    sealed partial class ToDoList: Page
+    {*/
+      /* 
         private MobileServiceCollection<TodoItem, TodoItem> items;
         private IMobileServiceTable<TodoItem> todoTable = App.MobileService.GetTable<TodoItem>();
-
+        */
         //private IMobileServiceSyncTable<TodoItem> todoTable = App.MobileService.GetSyncTable<TodoItem>(); // offline sync
 
-        public MainPage()
+       /* public MainPage()
         {
             this.InitializeComponent();
-        }
-
+        }*/
+/*
         private async Task InsertTodoItem(TodoItem todoItem)
         {
             // This code inserts a new TodoItem into the database. When the operation completes
@@ -63,6 +63,7 @@ namespace KidsList
             }
             else
             {
+               
                 ListItems.ItemsSource = items;
                 this.ButtonSave.IsEnabled = true;
             }
@@ -107,9 +108,9 @@ namespace KidsList
             //await InitLocalStoreAsync(); // offline sync
             await RefreshTodoItems();
         }
-
+        
         #region Offline sync
-
+        */
         //private async Task InitLocalStoreAsync()
         //{
         //    if (!App.MobileService.SyncContext.IsInitialized)
