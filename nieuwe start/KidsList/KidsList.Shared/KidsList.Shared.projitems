@@ -14,7 +14,7 @@
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)DataModel\Parent.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DataModel\TodoItem.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)MainPage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ToDoList.cs" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="$(MSBuildThisFileDirectory)App.xaml">

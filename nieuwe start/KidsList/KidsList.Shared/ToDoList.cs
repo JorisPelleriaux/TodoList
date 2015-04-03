@@ -16,7 +16,7 @@ using Windows.UI.Xaml.Navigation;
 
 namespace KidsList
 {
-    sealed partial class MainPage: Page
+    sealed partial class ToDoList: Page
     {
         
         private MobileServiceCollection<TodoItem, TodoItem> items;
@@ -24,7 +24,7 @@ namespace KidsList
 
         //private IMobileServiceSyncTable<TodoItem> todoTable = App.MobileService.GetSyncTable<TodoItem>(); // offline sync
 
-        public MainPage()
+        public ToDoList()
         {
             this.InitializeComponent();
         }
