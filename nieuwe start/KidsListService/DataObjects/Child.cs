@@ -2,12 +2,9 @@
 
 namespace KidsListService.DataObjects
 {
-    public class Parent : EntityData
+    public class Child : EntityData
     {
-        
         public string Name { get; set; }
-        public string Email { get; set; }
-        public string Phonenumber { get; set; }
         public string Username { get; set; }
     }
 }

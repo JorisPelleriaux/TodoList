@@ -9,42 +9,42 @@ using KidsListService.Models;
 
 namespace KidsListService.Controllers
 {
-    public class ParentController : TableController<Parent>
+    public class ChildController : TableController<Child>
     {
         protected override void Initialize(HttpControllerContext controllerContext)
         {
             base.Initialize(controllerContext);
             KidsListContext context = new KidsListContext();
-            DomainManager = new EntityDomainManager<Parent>(context, Request, Services);
+            DomainManager = new EntityDomainManager<Child>(context, Request, Services);
         }
 
-        // GET tables/Parents
-        public IQueryable<Parent> GetAllParents()
+        // GET tables/Children
+        public IQueryable<Child> GetAllChildren()
         {
             return Query();
         }
 
-        // GET tables/Parents/48D68C86-6EA6-4C25-AA33-223FC9A27959
-        public SingleResult<Parent> GetParent(string id)
+        // GET tables/Children/48D68C86-6EA6-4C25-AA33-223FC9A27959
+        public SingleResult<Child> GetChild(string id)
         {
             return Lookup(id);
         }
 
-        // PATCH tables/Parents/48D68C86-6EA6-4C25-AA33-223FC9A27959
-        public Task<Parent> PatchParent(string id, Delta<Parent> patch)
+        // PATCH tables/Children/48D68C86-6EA6-4C25-AA33-223FC9A27959
+       /* public Task<Child> PatchChild(string id, Delta<Parent> patch)
         {
             return UpdateAsync(id, patch);
-        }
+        }*/
 
-        // POST tables/Parents
-        public async Task<IHttpActionResult> PostParent(Parent parent)
+        // POST tables/Children
+        public async Task<IHttpActionResult> PostChild(Child child)
         {
-            Parent current = await InsertAsync(parent);
+            Child current = await InsertAsync(child);
             return CreatedAtRoute("Tables", new { id = current.Id }, current);
         }
 
-        // DELETE tables/Parents/48D68C86-6EA6-4C25-AA33-223FC9A27959
-        public Task DeleteParent(string id)
+        // DELETE tables/Children/48D68C86-6EA6-4C25-AA33-223FC9A27959
+        public Task DeleteChild(string id)
         {
             return DeleteAsync(id);
         }

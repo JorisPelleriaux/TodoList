@@ -27,6 +27,7 @@ namespace KidsListService.Models
 
         public DbSet<TodoItem> TodoItems { get; set; }
         public DbSet<Parent> Parents { get; set; }
+        public DbSet<Child> Children { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
