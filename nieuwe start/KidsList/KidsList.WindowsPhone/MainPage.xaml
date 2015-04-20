@@ -52,6 +52,6 @@
         <PasswordBox  Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" VerticalAlignment="Bottom"  Margin="10" Width="250" Height="5" Name="password" ></PasswordBox>
         <Button HorizontalAlignment="Center" Grid.ColumnSpan="2" Grid.Column="0" Grid.Row="2" Click="Button_Click_1">Register</Button>
         <Button HorizontalAlignment="Center" Grid.ColumnSpan="2" Grid.Column="2" Grid.Row="2" Width="10" Click="Button_Click">Login</Button>
-        <Image Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" Height="100" Width="200" Source="Cool.jpg"></Image>
+        <Image Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" Height="100" Width="200" Source="Assets/Cool.png"></Image>
     </Grid>
 </Page>
