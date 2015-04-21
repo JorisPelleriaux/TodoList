@@ -1,10 +1,13 @@
-﻿using System;
+﻿using Microsoft.WindowsAzure.MobileServices;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -22,6 +25,9 @@ namespace KidsList
     /// </summary>
     public sealed partial class ChildRegister : Page
     {
+        private MobileServiceCollection<Child, Child> children;
+        private IMobileServiceTable<Child> ChildTable = App.MobileService.GetTable<Child>();
+
         public ChildRegister()
         {
             this.InitializeComponent();
@@ -36,9 +42,31 @@ namespace KidsList
         {
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+
+        private async Task InsertChild(Child child)
         {
-            Frame.Navigate(typeof(MainPage));
+            // This code inserts a new TodoItem into the database. When the operation completes
+            // and Mobile Services has assigned an Id, the item is added to the CollectionView
+            await ChildTable.InsertAsync(child);
+
+            //parents.Add(parent);
+
+            //await SyncAsync(); // offline sync
+        }
+
+        private async void Button_Click(object sender, RoutedEventArgs e)
+        {
+            if (Password_Child.Password.Equals(Confirm_passwordCild.Password))
+            {
+                var child = new Child { Id = "10", Name = NameChild.Text, Username = UsernameChild.Text };
+                await InsertChild(child);
+                Frame.Navigate(typeof(MainPage));
+            }
+            else
+            {
+                MessageDialog pass = new MessageDialog("Your password and confirmation password do not match.");
+                await pass.ShowAsync();
+            }
         }
     }
 }

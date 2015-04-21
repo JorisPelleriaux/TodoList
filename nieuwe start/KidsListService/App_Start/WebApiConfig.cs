@@ -49,6 +49,7 @@ namespace KidsListService
                 context.Set<Parent>().Add(parent);
             }
 
+
             base.Seed(context);
         }
 

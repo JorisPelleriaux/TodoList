@@ -30,6 +30,8 @@ namespace KidsList
     /// </summary>
     public sealed partial class ParentRegister : Page
     {
+        public string nummer { get; set; }
+        public string test;
         private MobileServiceCollection<Parent, Parent> parents;
         private IMobileServiceTable<Parent> ParentTable = App.MobileService.GetTable<Parent>();
         public ParentRegister()
@@ -44,49 +46,32 @@ namespace KidsList
             // and Mobile Services has assigned an Id, the item is added to the CollectionView
             await ParentTable.InsertAsync(parent);
 
-            parents.Add(parent);
+            //parents.Add(parent);
 
             //await SyncAsync(); // offline sync
         }
 
 
+
         private async void Button_Click(object sender, RoutedEventArgs e)
         {
+            if (PasswordParents.Password.Equals(ConfPassword.Password))
+            {
+            nummer = Guid.NewGuid().ToString();
 
-
-            var parent = new Parent { Name = NameParents.Text, Email = EmailParents.Text, Phonenumber = PhonenumberParents.Text, Username = UsernameParents.Text };
+            var parent = new Parent {Id = nummer, Name = NameParents.Text, Email = EmailParents.Text, Phonenumber = PhonenumberParents.Text, Username = UsernameParents.Text };
             await InsertParent(parent);
             Frame.Navigate(typeof(ChildRegister));
-
-        }
-
-
-        private async Task RefreshParents()
-        {
-            MobileServiceInvalidOperationException exception = null;
-            try
-            {
-
-                // This code refreshes the entries in the list view by querying the TodoItems table.
-                // The query excludes completed TodoItems
-                parents = await ParentTable
-                    .ToCollectionAsync();
-            }
-            catch (MobileServiceInvalidOperationException e)
-            {
-                exception = e;
             }
 
-            if (exception != null)
-            {
-                await new MessageDialog(exception.Message, "Error loading items").ShowAsync();
-            }
             else
             {
-                /*ListItems.ItemsSource = items;
-                this.ButtonSave.IsEnabled = true;*/
+                MessageDialog pass = new MessageDialog("Your password and confirmation password do not match.");
+                await pass.ShowAsync();
             }
 
+            
         }
+           
     }
 }
