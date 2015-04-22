@@ -25,12 +25,14 @@ namespace KidsList
     /// </summary>
     public sealed partial class ChildRegister : Page
     {
+        string numm;
         private MobileServiceCollection<Child, Child> children;
         private IMobileServiceTable<Child> ChildTable = App.MobileService.GetTable<Child>();
 
         public ChildRegister()
         {
             this.InitializeComponent();
+            
         }
 
         /// <summary>
@@ -40,6 +42,7 @@ namespace KidsList
         /// This parameter is typically used to configure the page.</param>
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
+             numm = e.Parameter as string;
         }
 
 
@@ -56,9 +59,11 @@ namespace KidsList
 
         private async void Button_Click(object sender, RoutedEventArgs e)
         {
+            
             if (Password_Child.Password.Equals(Confirm_passwordCild.Password))
             {
-                var child = new Child { Id = "10", Name = NameChild.Text, Username = UsernameChild.Text };
+                
+                var child = new Child { Id = numm, Name = NameChild.Text, Username = UsernameChild.Text, Password = Password_Child.Password};
                 await InsertChild(child);
                 Frame.Navigate(typeof(MainPage));
             }

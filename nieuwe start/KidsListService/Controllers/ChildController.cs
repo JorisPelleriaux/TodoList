@@ -31,10 +31,10 @@ namespace KidsListService.Controllers
         }
 
         // PATCH tables/Children/48D68C86-6EA6-4C25-AA33-223FC9A27959
-       /* public Task<Child> PatchChild(string id, Delta<Parent> patch)
+        public Task<Child> PatchChild(string id, Delta<Child> patch)
         {
             return UpdateAsync(id, patch);
-        }*/
+        }
 
         // POST tables/Children
         public async Task<IHttpActionResult> PostChild(Child child)

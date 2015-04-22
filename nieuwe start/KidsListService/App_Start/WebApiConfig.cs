@@ -39,7 +39,10 @@ namespace KidsListService
             {
                 new Parent { Id = Guid.NewGuid().ToString(), Name = "fons" },
             };
-
+            List<Child> Children = new List<Child>
+            {
+                new Child { Id = Guid.NewGuid().ToString(), Name = "child", Username = "kindje" },
+            };
             foreach (TodoItem todoItem in todoItems)
             {
                 context.Set<TodoItem>().Add(todoItem);
@@ -49,6 +52,10 @@ namespace KidsListService
                 context.Set<Parent>().Add(parent);
             }
 
+            foreach (Child child in Children)
+            {
+                context.Set<Child>().Add(child);
+            }
 
             base.Seed(context);
         }

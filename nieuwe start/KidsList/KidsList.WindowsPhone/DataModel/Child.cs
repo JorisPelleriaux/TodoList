@@ -15,5 +15,8 @@ namespace KidsList
 
         [JsonProperty(PropertyName = "Username")]
         public string Username { get; set; }
+
+        [JsonProperty(PropertyName = "Password")]
+        public string Password { get; set; }
     }
 }

@@ -21,6 +21,7 @@ using Windows.UI.Popups;
 
 
 
+
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkID=390556
 
 namespace KidsList
@@ -28,6 +29,9 @@ namespace KidsList
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
+
+   
+    
     public sealed partial class ParentRegister : Page
     {
         public string nummer { get; set; }
@@ -53,18 +57,24 @@ namespace KidsList
 
 
 
-        private async void Button_Click(object sender, RoutedEventArgs e)
+        public async void Button_Click(object sender, RoutedEventArgs e)
         {
             if (PasswordParents.Password.Equals(ConfPassword.Password))
             {
             nummer = Guid.NewGuid().ToString();
 
-            var parent = new Parent {Id = nummer, Name = NameParents.Text, Email = EmailParents.Text, Phonenumber = PhonenumberParents.Text, Username = UsernameParents.Text };
-            await InsertParent(parent);
-            Frame.Navigate(typeof(ChildRegister));
+            var parent1 = new Parent {Id = nummer, Name = NameParents.Text, Email = EmailParents.Text, Phonenumber = PhonenumberParents.Text, Username = UsernameParents.Text };
+            await InsertParent(parent1);
+            Frame.Navigate(typeof(ChildRegister), nummer);
             }
 
-            else
+            if (NameParents == null || EmailParents == null || UsernameParents == null)
+            {
+                MessageDialog pass = new MessageDialog("please fill in the required fields");
+                await pass.ShowAsync();
+            }
+
+            if (!PasswordParents.Password.Equals(ConfPassword.Password))
             {
                 MessageDialog pass = new MessageDialog("Your password and confirmation password do not match.");
                 await pass.ShowAsync();
