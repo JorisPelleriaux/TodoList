@@ -14,5 +14,8 @@ namespace KidsList
 
         [JsonProperty(PropertyName = "complete")]
         public bool Complete { get; set; }
+
+        [JsonProperty(PropertyName = "time")]
+        public string Time { get; set; }
     }
 }

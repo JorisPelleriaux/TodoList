@@ -19,8 +19,10 @@ namespace KidsList
     sealed partial class ToDoList: Page
     {
         
+        
         private MobileServiceCollection<TodoItem, TodoItem> items;
         private IMobileServiceTable<TodoItem> todoTable = App.MobileService.GetTable<TodoItem>();
+       
 
         //private IMobileServiceSyncTable<TodoItem> todoTable = App.MobileService.GetSyncTable<TodoItem>(); // offline sync
 
@@ -91,7 +93,7 @@ namespace KidsList
 
         private async void ButtonSave_Click(object sender, RoutedEventArgs e)
         {
-            var todoItem = new TodoItem { Text = addTaskBox.Text };
+            var todoItem = new TodoItem { Text = addTaskBox.Text, Time = choseTime.Time.ToString()  };
             await InsertTodoItem(todoItem);
         }
 
