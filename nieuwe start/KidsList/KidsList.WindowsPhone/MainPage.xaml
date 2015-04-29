@@ -50,8 +50,8 @@
         <TextBlock Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="3" VerticalAlignment="Center" FontSize="55"  Height="60">Kids List</TextBlock>
         <TextBox Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" VerticalAlignment="Top"  Margin="10" Height="5" Width="200" Name="username" Text="Username"></TextBox>
         <PasswordBox  Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" VerticalAlignment="Bottom"  Margin="10" Width="250" Height="5" Name="password" ></PasswordBox>
-        <Button HorizontalAlignment="Center" Grid.ColumnSpan="2" Grid.Column="0" Grid.Row="2" Click="Button_Click_1">Register</Button>
-        <Button HorizontalAlignment="Center" Grid.ColumnSpan="2" Grid.Column="2" Grid.Row="2" Width="10" Click="Button_Click">Login</Button>
+        <Button HorizontalAlignment="Center" Grid.ColumnSpan="2" Grid.Column="0" Grid.Row="2" Click="Register_Click">Register</Button>
+        <Button HorizontalAlignment="Center" Grid.ColumnSpan="2" Grid.Column="2" Grid.Row="2" Width="10" Click="Login_Click">Login</Button>
         <Image Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" Height="100" Width="200" Source="Assets/Cool.png"></Image>
     </Grid>
 </Page>
