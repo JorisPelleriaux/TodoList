@@ -25,7 +25,7 @@ namespace KidsList
     /// </summary>
     public sealed partial class ChildRegister : Page
     {
-        string numm;
+        string IdParent;
         private MobileServiceCollection<Child, Child> children;
         private IMobileServiceTable<Child> ChildTable = App.MobileService.GetTable<Child>();
 
@@ -42,7 +42,7 @@ namespace KidsList
         /// This parameter is typically used to configure the page.</param>
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-             numm = e.Parameter as string;
+             IdParent = e.Parameter as string;
         }
 
 
@@ -57,21 +57,26 @@ namespace KidsList
             //await SyncAsync(); // offline sync
         }
 
-        private async void Button_Click(object sender, RoutedEventArgs e)
+        private async void Submit_Click(object sender, RoutedEventArgs e)
         {
-            
-            if (Password_Child.Password.Equals(Confirm_passwordCild.Password))
+             if (Password_Child.Password.Equals(Confirm_passwordCild.Password))
             {
-                
-                var child = new Child { Id = numm, Name = NameChild.Text, Username = UsernameChild.Text, Password = Password_Child.Password};
-                await InsertChild(child);
-                Frame.Navigate(typeof(MainPage));
+                if (NameChild.Text == "" || UsernameChild.Text == "" || Password_Child.Password == "")
+                {
+                    await new MessageDialog("please fill in the required fields").ShowAsync();
+                }
+                else if (NameChild.Text != "" || UsernameChild.Text != "" || Password_Child.Password != "")
+                {
+                    var child = new Child { Id = IdParent, Name = NameChild.Text, Username = UsernameChild.Text, Password = Password_Child.Password };
+                    await InsertChild(child);
+                    Frame.Navigate(typeof(MainPage));
+                }
             }
-            else
+
+            else if (!Password_Child.Password.Equals(Confirm_passwordCild.Password))
             {
-                MessageDialog pass = new MessageDialog("Your password and confirmation password do not match.");
-                await pass.ShowAsync();
-            }
+                await new MessageDialog("Your password and confirmation password do not match.").ShowAsync();
+            }  
         }
     }
 }

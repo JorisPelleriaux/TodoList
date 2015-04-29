@@ -55,32 +55,33 @@ namespace KidsList
             //await SyncAsync(); // offline sync
         }
 
-
-
-        public async void Button_Click(object sender, RoutedEventArgs e)
+        private async void Next_Click(object sender, RoutedEventArgs e)
         {
-            if (PasswordParents.Password.Equals(ConfPassword.Password))
+             if (PasswordParents.Password.Equals(ConfPassword.Password))
             {
-            nummer = Guid.NewGuid().ToString();
+                if (NameParents.Text == "" || EmailParents.Text == "" || UsernameParents.Text == "" || PasswordParents.Password == "")
+                {
+                    await new MessageDialog("please fill in the required fields").ShowAsync();
+                }
 
-            var parent1 = new Parent {Id = nummer, Name = NameParents.Text, Email = EmailParents.Text, Phonenumber = PhonenumberParents.Text, Username = UsernameParents.Text };
-            await InsertParent(parent1);
-            Frame.Navigate(typeof(ChildRegister), nummer);
+                else if (NameParents.Text != "" || EmailParents.Text != "" || UsernameParents.Text != "")
+                {
+                    nummer = Guid.NewGuid().ToString();
+
+                    var parent1 = new Parent { Id = nummer, Name = NameParents.Text, Email = EmailParents.Text, Phonenumber = PhonenumberParents.Text, Username = UsernameParents.Text, Password = PasswordParents.Password };
+                    await InsertParent(parent1);
+                    Frame.Navigate(typeof(ChildRegister), nummer);
+                }
             }
-
-            if (NameParents == null || EmailParents == null || UsernameParents == null)
+            else if (!PasswordParents.Password.Equals(ConfPassword.Password))
             {
-                MessageDialog pass = new MessageDialog("please fill in the required fields");
-                await pass.ShowAsync();
-            }
+                await new MessageDialog("Your password and confirmation password do not match.").ShowAsync();
+            } 
+        }
 
-            if (!PasswordParents.Password.Equals(ConfPassword.Password))
-            {
-                MessageDialog pass = new MessageDialog("Your password and confirmation password do not match.");
-                await pass.ShowAsync();
-            }
-
-            
+        private void BackParents_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(MainPage));
         }
            
     }
