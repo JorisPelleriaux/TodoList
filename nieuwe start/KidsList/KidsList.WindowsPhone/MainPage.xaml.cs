@@ -33,13 +33,12 @@ namespace KidsList
                       .ToCollectionAsync();
         }
 
-        private void Button_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        private void Login_Click(object sender, RoutedEventArgs e)
         {
-            
             Frame.Navigate(typeof(ToDoList));
         }
 
-        private void Button_Click_1(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        private void Register_Click(object sender, RoutedEventArgs e)
         {
             Frame.Navigate(typeof(ParentRegister));
         }

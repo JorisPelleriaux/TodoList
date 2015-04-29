@@ -100,7 +100,7 @@ namespace KidsList
             }
             catch (Exception e)
             {
-                Debug.WriteLine("Failed to capture audio");
+                Debug.WriteLine(e);
             }
         }
 
