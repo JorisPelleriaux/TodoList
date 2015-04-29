@@ -9,5 +9,7 @@ namespace KidsListService.DataObjects
         public bool Complete { get; set; }
 
         public string Time { get; set; }
+
+        public string Date { get; set; }
     }
 }

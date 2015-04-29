@@ -75,7 +75,7 @@
             <TextBox Name="addTaskBox" Text="" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="1" Grid.ColumnSpan="4" />
             <Button Content="Add Task" Name="ButtonSave" Click="ButtonSave_Click" IsEnabled="False" HorizontalAlignment="Stretch" Grid.Row="3" Grid.RowSpan="1" Grid.ColumnSpan="4"/>
             <Button Grid.Row="4"  Name="ButtonRefresh" Click="ButtonRefresh_Click" HorizontalAlignment="Stretch" Grid.ColumnSpan="4">Refresh</Button>
-            <ListView  Grid.Row="5" Grid.RowSpan="3" Grid.ColumnSpan="4" Name="ListItems">
+            <ListView  Grid.Row="5" Grid.RowSpan="3" Grid.ColumnSpan="4" Name="ListItems" SelectionChanged="ListItems_SelectionChanged">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal">
