@@ -26,5 +26,10 @@ namespace KidsList
         {
             Frame.Navigate(typeof(ParentRegister));
         }
+
+        private void ListItems_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
     }
 }
