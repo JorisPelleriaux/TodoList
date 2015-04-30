@@ -34,6 +34,7 @@ namespace KidsList
     
     public sealed partial class ParentRegister : Page
     {
+        private bool AlreadyExist = false;
         public string nummer { get; set; }
         public string test;
         private MobileServiceCollection<Parent, Parent> parents;
@@ -55,28 +56,49 @@ namespace KidsList
             //await SyncAsync(); // offline sync
         }
 
+        private async Task CheckAlreadyExists()
+        {
+            
+            parents = await ParentTable
+                          .Where(Parent => Parent.Username == UsernameParents.Text)
+                          .ToCollectionAsync();
+
+            if (parents.Count > 0 && parents[0].Username == UsernameParents.Text)
+            {      
+                AlreadyExist = true;    
+            }
+            else if (parents.Count <= 0)
+                AlreadyExist = false;
+        }
         private async void Next_Click(object sender, RoutedEventArgs e)
         {
-             if (PasswordParents.Password.Equals(ConfPassword.Password))
-            {
-                if (NameParents.Text == "" || EmailParents.Text == "" || UsernameParents.Text == "" || PasswordParents.Password == "")
-                {
-                    await new MessageDialog("please fill in the required fields").ShowAsync();
-                }
+           await CheckAlreadyExists();
+           if (NameParents.Text != "" && EmailParents.Text != "" && UsernameParents.Text != "" && PasswordParents.Password != "")
+           {
+               if (PasswordParents.Password.Equals(ConfPassword.Password))
+               {
 
-                else if (NameParents.Text != "" || EmailParents.Text != "" || UsernameParents.Text != "")
-                {
-                    nummer = Guid.NewGuid().ToString();
+                   if (AlreadyExist == false)
+                   {
+                       nummer = Guid.NewGuid().ToString();
 
-                    var parent1 = new Parent { Id = nummer, Name = NameParents.Text, Email = EmailParents.Text, Phonenumber = PhonenumberParents.Text, Username = UsernameParents.Text, Password = PasswordParents.Password };
-                    await InsertParent(parent1);
-                    Frame.Navigate(typeof(ChildRegister), nummer);
-                }
-            }
-            else if (!PasswordParents.Password.Equals(ConfPassword.Password))
-            {
-                await new MessageDialog("Your password and confirmation password do not match.").ShowAsync();
-            } 
+                       var parent1 = new Parent { Id = nummer, Name = NameParents.Text, Email = EmailParents.Text, Phonenumber = PhonenumberParents.Text, Username = UsernameParents.Text, Password = PasswordParents.Password };
+                       await InsertParent(parent1);
+                       Frame.Navigate(typeof(ChildRegister), nummer);
+                   }
+                   else if (AlreadyExist == true)
+                       await new MessageDialog("Username already exists").ShowAsync();
+
+               }
+               else if (!PasswordParents.Password.Equals(ConfPassword.Password))
+               {
+                   await new MessageDialog("Your password and confirmation password do not match.").ShowAsync();
+               }
+           }
+           else if (NameParents.Text == "" || EmailParents.Text == "" || UsernameParents.Text == "" || PasswordParents.Password == "")
+           {
+               await new MessageDialog("please fill in the required fields").ShowAsync();
+           }
         }
 
         private void BackParents_Click(object sender, RoutedEventArgs e)

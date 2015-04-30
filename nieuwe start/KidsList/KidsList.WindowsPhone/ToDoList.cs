@@ -8,6 +8,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 
+
 // To add offline sync support, add the NuGet package Microsoft.WindowsAzure.MobileServices.SQLiteStore
 // to your project. Then, uncomment the lines marked // offline sync
 // For more information, see: http://aka.ms/addofflinesync
@@ -30,7 +31,7 @@ namespace KidsList
         {
             this.InitializeComponent();
         }
-
+  
         private async Task InsertTodoItem(TodoItem todoItem)
         {
             // This code inserts a new TodoItem into the database. When the operation completes
