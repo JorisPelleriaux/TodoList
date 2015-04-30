@@ -23,7 +23,7 @@ namespace KidsList
     {
         private bool Login = false;
         private bool IsParent = false;
-        private MobileServiceCollection<Parent, Parent> parents;
+        public MobileServiceCollection<Parent, Parent> parentLoggedIn;
         private IMobileServiceTable<Parent> ParentTable = App.MobileService.GetTable<Parent>();
         private MobileServiceCollection<Child, Child> children;
         private IMobileServiceTable<Child> ChildTable = App.MobileService.GetTable<Child>();
@@ -35,7 +35,7 @@ namespace KidsList
         {
             try
             {
-                parents = await ParentTable
+                parentLoggedIn = await ParentTable
                           .Where(Parent => Parent.Username == username.Text)
                           .ToCollectionAsync();
 
@@ -55,16 +55,16 @@ namespace KidsList
                 }
                 if (children.Count <= 0)
                 {
-                    if (parents.Count > 0)
+                    if (parentLoggedIn.Count > 0)
                     {
-                        if (parents[0].Username == username.Text && parents[0].Password == password.Password)
+                        if (parentLoggedIn[0].Username == username.Text && parentLoggedIn[0].Password == password.Password)
                         {
                             Login = true;
                             IsParent = true;
-                            await new MessageDialog("Welcome " + parents[0].Name).ShowAsync();
+                            await new MessageDialog("Welcome " + parentLoggedIn[0].Name).ShowAsync();
                         }
                     }
-                    if (parents.Count <= 0)
+                    if (parentLoggedIn.Count <= 0)
                     {
                         await new MessageDialog("Incorrect username or password").ShowAsync();
                     }
@@ -87,7 +87,10 @@ namespace KidsList
             await ControleLogin();
             if (Login == true)
             {
-                Frame.Navigate(typeof(ToDoList));
+                if (IsParent == true)
+                {
+                    Frame.Navigate(typeof(ToDoList), parentLoggedIn[0].Id);
+                }
             }
         }
 

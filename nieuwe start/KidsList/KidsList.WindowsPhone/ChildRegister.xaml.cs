@@ -25,7 +25,7 @@ namespace KidsList
     /// </summary>
     public sealed partial class ChildRegister : Page
     {
-        string IdParent;
+        private string IdParent;
         private MobileServiceCollection<Child, Child> children;
         private IMobileServiceTable<Child> ChildTable = App.MobileService.GetTable<Child>();
 

@@ -17,10 +17,9 @@ using Windows.UI.Xaml.Navigation;
 
 namespace KidsList
 {
-    sealed partial class ToDoList: Page
+    public sealed partial class ToDoList : Page
     {
-        
-        
+        private string IdParent;
         private MobileServiceCollection<TodoItem, TodoItem> items;
         private IMobileServiceTable<TodoItem> todoTable = App.MobileService.GetTable<TodoItem>();
        
@@ -94,7 +93,8 @@ namespace KidsList
 
         private async void ButtonSave_Click(object sender, RoutedEventArgs e)
         {
-            var todoItem = new TodoItem { Text = addTaskBox.Text, Time = choseTime.Time.ToString(), Date = choseDate.Date.ToString() };
+            
+            var todoItem = new TodoItem { Text = addTaskBox.Text, Time = choseTime.Time.ToString(), Date = choseDate.Date.ToString(), IdParent = IdParent };
             await InsertTodoItem(todoItem);
         }
 
@@ -109,7 +109,10 @@ namespace KidsList
         {
             //await InitLocalStoreAsync(); // offline sync
             await RefreshTodoItems();
+            IdParent = e.Parameter as string;
         }
+
+
 
         #region Offline sync
 
