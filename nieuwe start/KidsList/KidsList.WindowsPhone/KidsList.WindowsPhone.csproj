@@ -102,6 +102,9 @@
     <Compile Include="ToDoList.xaml.cs">
       <DependentUpon>ToDoList.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ToDoListKids.xaml.cs">
+      <DependentUpon>ToDoListKids.xaml</DependentUpon>
+    </Compile>
     <Compile Include="VoiceRecorder.xaml.cs">
       <DependentUpon>VoiceRecorder.xaml</DependentUpon>
     </Compile>
@@ -141,6 +144,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ToDoList.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ToDoListKids.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
