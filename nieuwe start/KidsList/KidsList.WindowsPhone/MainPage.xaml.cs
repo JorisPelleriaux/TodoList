@@ -50,7 +50,7 @@ namespace KidsList
                     {
                         Login = true;
                         IsParent = false;
-                        await new MessageDialog("Welkom " + children[0].Name).ShowAsync();
+                        await new MessageDialog("Welcome " + children[0].Name).ShowAsync();
                     }
                 }
                 if (children.Count <= 0)
@@ -61,17 +61,14 @@ namespace KidsList
                         {
                             Login = true;
                             IsParent = true;
-                            await new MessageDialog("Welkom " + parents[0].Name).ShowAsync();
+                            await new MessageDialog("Welcome " + parents[0].Name).ShowAsync();
                         }
                     }
                     if (parents.Count <= 0)
                     {
-                        await new MessageDialog("Wrong username or password").ShowAsync();
+                        await new MessageDialog("Incorrect username or password").ShowAsync();
                     }
-                    else
-                    {
-                        await new MessageDialog("something wrong, please try again").ShowAsync();
-                    }
+
                 }
                 if (username.Text == null || password.Password == null)
                 {
