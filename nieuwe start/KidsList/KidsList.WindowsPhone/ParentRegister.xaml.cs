@@ -72,7 +72,7 @@ namespace KidsList
         }
         private async void Next_Click(object sender, RoutedEventArgs e)
         {
-           //await CheckAlreadyExists();
+           await CheckAlreadyExists();
            if (NameParents.Text != "" && EmailParents.Text != "" && UsernameParents.Text != "" && PasswordParents.Password != "")
            {
                if (PasswordParents.Password.Equals(ConfPassword.Password))
