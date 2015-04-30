@@ -85,7 +85,7 @@
                 </ListView.ItemTemplate>
             </ListView>
             <TimePicker Name="choseTime" HorizontalAlignment="Center"  Grid.Row="2" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
-            <DatePicker Name="choseDate" HorizontalAlignment="Center"  Grid.Row="2" VerticalAlignment="Top" Grid.Column="2" Grid.ColumnSpan="2"/>
+            <DatePicker Name="choseDate" HorizontalAlignment="Center"  Grid.Row="2" VerticalAlignment="Top" Grid.Column="2" Grid.ColumnSpan="2" />
             
 
 
