@@ -25,6 +25,7 @@ namespace KidsList
     /// </summary>
     public sealed partial class ToDoListKids : Page
     {
+        private string IdParent;
         private MobileServiceCollection<TodoItem, TodoItem> items;
         private IMobileServiceTable<TodoItem> todoTable = App.MobileService.GetTable<TodoItem>();
         public ToDoListKids()
@@ -41,6 +42,7 @@ namespace KidsList
 
             //await SyncAsync(); // offline sync
         }
+
         private async Task RefreshTodoItems()
         {
             MobileServiceInvalidOperationException exception = null;
@@ -50,7 +52,8 @@ namespace KidsList
                 // This code refreshes the entries in the list view by querying the TodoItems table.
                 // The query excludes completed TodoItems
                 items = await todoTable
-                    .Where(todoItem => todoItem.Complete == false)
+                    .Where(todoItem => todoItem.Complete == false) 
+                    .Where(todoItem => todoItem.IdParent == IdParent)
                     .ToCollectionAsync();
             }
             catch (MobileServiceInvalidOperationException e)
@@ -76,6 +79,7 @@ namespace KidsList
         protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
             await RefreshTodoItems();
+            IdParent = e.Parameter as string;
         }
 
         private void ListItems_SelectionChanged(object sender, SelectionChangedEventArgs e)

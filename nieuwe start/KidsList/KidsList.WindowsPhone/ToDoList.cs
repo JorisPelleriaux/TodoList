@@ -52,6 +52,7 @@ namespace KidsList
                 // The query excludes completed TodoItems
                 items = await todoTable
                     .Where(todoItem => todoItem.Complete == false)
+                    .Where(todoItem => todoItem.IdParent == IdParent)
                     .ToCollectionAsync();
             }
             catch (MobileServiceInvalidOperationException e)
