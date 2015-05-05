@@ -56,10 +56,9 @@ namespace KidsList
 
             //await SyncAsync(); // offline sync
         }
-
-        private async void Submit_Click(object sender, RoutedEventArgs e)
+        private async void SaveToDatabase()
         {
-             if (Password_Child.Password.Equals(Confirm_passwordCild.Password))
+            if (Password_Child.Password.Equals(Confirm_passwordCild.Password))
             {
                 if (NameChild.Text == "" || UsernameChild.Text == "" || Password_Child.Password == "")
                 {
@@ -67,9 +66,9 @@ namespace KidsList
                 }
                 else if (NameChild.Text != "" || UsernameChild.Text != "" || Password_Child.Password != "")
                 {
-                    var child = new Child { Id = IdParent, Name = NameChild.Text, Username = UsernameChild.Text, Password = Password_Child.Password };
+                    var child = new Child { IdParent = IdParent, Name = NameChild.Text, Username = UsernameChild.Text, Password = Password_Child.Password };
                     await InsertChild(child);
-                    Frame.Navigate(typeof(MainPage));
+                    
                 }
             }
 
@@ -77,6 +76,18 @@ namespace KidsList
             {
                 await new MessageDialog("Your password and confirmation password do not match.").ShowAsync();
             }  
+        }
+
+        private void Submit_Click(object sender, RoutedEventArgs e)
+        {
+             SaveToDatabase();
+             Frame.Navigate(typeof(MainPage));
+        }
+
+        private void Image_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            SaveToDatabase();
+            Frame.Navigate(typeof(ChildRegister), IdParent);
         }
     }
 }
