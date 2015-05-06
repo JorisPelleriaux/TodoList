@@ -21,6 +21,8 @@ namespace KidsList
     {
         private string IdParent;
         private MobileServiceCollection<TodoItem, TodoItem> items;
+        private MobileServiceCollection<Child, Child> children;
+        private IMobileServiceTable<Child> childrenTable = App.MobileService.GetTable<Child>();
         private IMobileServiceTable<TodoItem> todoTable = App.MobileService.GetTable<TodoItem>();
        
 
@@ -40,7 +42,7 @@ namespace KidsList
 
             //await SyncAsync(); // offline sync
         }
-
+           
         private async Task RefreshTodoItems()
         {
             MobileServiceInvalidOperationException exception = null;
@@ -111,10 +113,21 @@ namespace KidsList
             //await InitLocalStoreAsync(); // offline sync
             IdParent = e.Parameter as string;
             await RefreshTodoItems();
-            IdParent = e.Parameter as string;
+            getChild();
+            
         }
 
-
+        private async void getChild()
+        {
+            children = await childrenTable                   
+                   .Where(child => child.IdParent == IdParent)
+                   .ToCollectionAsync();
+            foreach (var c in children)
+            {
+                amountKidsList.Items.Add(c.Name);
+            }
+            
+        }
 
         #region Offline sync
 
