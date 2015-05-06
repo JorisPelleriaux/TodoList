@@ -15,6 +15,10 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using Microsoft.WindowsAzure.Storage;
+using Microsoft.WindowsAzure.Storage.Auth;
+using Microsoft.WindowsAzure.Storage.Blob;
+
 
 namespace KidsList
 {
@@ -23,6 +27,8 @@ namespace KidsList
     /// </summary>
     sealed partial class App : Application
     {
+        private static readonly StorageCredentials cred = new StorageCredentials("audiostorage", "a7rLdAdKwgnJijdZTrE5slrN3DK3fBbMwyVoQruTb/y3OHM4IXTUDql5dk15MR6WSzc/E0ovX4ZzqiqwcDkw+w==");
+        public static readonly CloudBlobContainer container = new CloudBlobContainer(new Uri("https://audiostorage.blob.core.windows.net/audio"), cred); 
 
         // This MobileServiceClient has been configured to communicate with your local
         // test project for debugging purposes.
@@ -98,6 +104,8 @@ namespace KidsList
             // Ensure the current window is active
             Window.Current.Activate();
         }
+
+       
 
         /// <summary>
         /// Invoked when Navigation to a certain page fails
