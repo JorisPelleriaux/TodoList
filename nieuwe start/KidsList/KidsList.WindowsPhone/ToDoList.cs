@@ -95,7 +95,7 @@ namespace KidsList
         private async void ButtonSave_Click(object sender, RoutedEventArgs e)
         {
             
-            var todoItem = new TodoItem { Text = addTaskBox.Text, Time = choseTime.Time.ToString(), Date = choseDate.Date.ToString("dd-MM-yyyy"), IdParent = IdParent };
+            var todoItem = new TodoItem { Text = addTaskBox.Text, Time = choseTime.Time.ToString(), Date = choseDate.Date.ToString(), IdParent = IdParent };
             await InsertTodoItem(todoItem);
         }
 
