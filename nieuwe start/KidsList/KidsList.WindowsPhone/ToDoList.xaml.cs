@@ -31,5 +31,10 @@ namespace KidsList
         {
 
         }
+
+        private void Image_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(VoiceRecorder));
+        }
     }
 }

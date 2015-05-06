@@ -25,7 +25,8 @@ namespace KidsList
     /// </summary>
     public sealed partial class ChildRegister : Page
     {
-        string IdParent;
+        private bool AlreadyExist = false;
+        private string IdParent;
         private MobileServiceCollection<Child, Child> children;
         private IMobileServiceTable<Child> ChildTable = App.MobileService.GetTable<Child>();
 
@@ -45,38 +46,65 @@ namespace KidsList
              IdParent = e.Parameter as string;
         }
 
+        private async Task CheckAlreadyExists()
+        {
+            children = await ChildTable
+                          .Where(Child => Child.Username == UsernameChild.Text)
+                          .ToCollectionAsync();
+
+            if (children.Count > 0 && children[0].Username == UsernameChild.Text)
+                AlreadyExist = true;
+            
+            else if (children.Count == 0)
+                AlreadyExist = false;
+        }
 
         private async Task InsertChild(Child child)
         {
             // This code inserts a new TodoItem into the database. When the operation completes
             // and Mobile Services has assigned an Id, the item is added to the CollectionView
+            //Save child to database
             await ChildTable.InsertAsync(child);
-
-            //parents.Add(parent);
-
             //await SyncAsync(); // offline sync
         }
 
-        private async void Submit_Click(object sender, RoutedEventArgs e)
+        private async void CreateNewChild()
         {
-             if (Password_Child.Password.Equals(Confirm_passwordCild.Password))
+            if (NameChild.Text != "" && UsernameChild.Text != "" && Password_Child.Password != "")
             {
-                if (NameChild.Text == "" || UsernameChild.Text == "" || Password_Child.Password == "")
+                if (Password_Child.Password.Equals(Confirm_passwordCild.Password))
                 {
-                    await new MessageDialog("please fill in the required fields").ShowAsync();
+                    if (AlreadyExist == false)
+                    {
+                        //Create a new child
+                        var child = new Child { IdParent = IdParent, Name = NameChild.Text, Username = UsernameChild.Text, Password = Password_Child.Password };
+                        await InsertChild(child);
+                    }
+                    else if (AlreadyExist == true)
+                        await new MessageDialog("Username already exists").ShowAsync();
                 }
-                else if (NameChild.Text != "" || UsernameChild.Text != "" || Password_Child.Password != "")
+                else if (!Password_Child.Password.Equals(Confirm_passwordCild.Password))
                 {
-                    var child = new Child { Id = IdParent, Name = NameChild.Text, Username = UsernameChild.Text, Password = Password_Child.Password };
-                    await InsertChild(child);
-                    Frame.Navigate(typeof(MainPage));
+                    await new MessageDialog("Your password and confirmation password do not match.").ShowAsync();
                 }
             }
-
-            else if (!Password_Child.Password.Equals(Confirm_passwordCild.Password))
+            else if (NameChild.Text == "" || UsernameChild.Text == "" || Password_Child.Password == "")
             {
-                await new MessageDialog("Your password and confirmation password do not match.").ShowAsync();
-            }  
+                await new MessageDialog("please fill in the required fields").ShowAsync();
+            }
+        }
+
+        private void Submit_Click(object sender, RoutedEventArgs e)
+        {
+             CreateNewChild();
+            // Go back to the login screen
+             Frame.Navigate(typeof(MainPage));
+        }
+
+        private void Image_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            CreateNewChild();
+            Frame.Navigate(typeof(ChildRegister), IdParent);
         }
     }
 }

@@ -17,10 +17,9 @@ using Windows.UI.Xaml.Navigation;
 
 namespace KidsList
 {
-    sealed partial class ToDoList: Page
+    public sealed partial class ToDoList : Page
     {
-        
-        
+        private string IdParent;
         private MobileServiceCollection<TodoItem, TodoItem> items;
         private IMobileServiceTable<TodoItem> todoTable = App.MobileService.GetTable<TodoItem>();
        
@@ -53,6 +52,7 @@ namespace KidsList
                 // The query excludes completed TodoItems
                 items = await todoTable
                     .Where(todoItem => todoItem.Complete == false)
+                    .Where(todoItem => todoItem.IdParent == IdParent)
                     .ToCollectionAsync();
             }
             catch (MobileServiceInvalidOperationException e)
@@ -79,7 +79,7 @@ namespace KidsList
             items.Remove(item);
             ListItems.Focus(Windows.UI.Xaml.FocusState.Unfocused);
 
-            //await SyncAsync(); // offline sync
+           // await SyncAsync(); // offline sync
         }
 
         private async void ButtonRefresh_Click(object sender, RoutedEventArgs e)
@@ -91,12 +91,11 @@ namespace KidsList
 
             ButtonRefresh.IsEnabled = true;
         }
-       
 
         private async void ButtonSave_Click(object sender, RoutedEventArgs e)
         {
-
-            var todoItem = new TodoItem { Text = addTaskBox.Text, Time = choseTime.Time.ToString(), Date = choseDate.Date.ToString("yyyy-MM-dd") };
+            
+            var todoItem = new TodoItem { Text = addTaskBox.Text, Time = choseTime.Time.ToString(), Date = choseDate.Date.ToString("dd-MM-yyyy"), IdParent = IdParent };
             await InsertTodoItem(todoItem);
         }
 
@@ -110,28 +109,31 @@ namespace KidsList
         protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
             //await InitLocalStoreAsync(); // offline sync
+            IdParent = e.Parameter as string;
             await RefreshTodoItems();
         }
 
+
+
         #region Offline sync
 
-        //private async Task InitLocalStoreAsync()
-        //{
+       // private async Task InitLocalStoreAsync()
+       // {
         //    if (!App.MobileService.SyncContext.IsInitialized)
         //    {
-        //        var store = new MobileServiceSQLiteStore("localstore.db");
-        //        store.DefineTable<TodoItem>();
-        //        await App.MobileService.SyncContext.InitializeAsync(store);
+        //       var store = new MobileServiceSQLiteStore("localstore.db");
+        //       store.DefineTable<TodoItem>();
+        //       await App.MobileService.SyncContext.InitializeAsync(store);
         //    }
         //
         //    await SyncAsync();
-        //}
+       // }
 
-        //private async Task SyncAsync()
-        //{
-        //    await App.MobileService.SyncContext.PushAsync();
-        //    await todoTable.PullAsync("todoItems", todoTable.CreateQuery());
-        //}
+      //  private async Task SyncAsync()
+       // {
+       //     await App.MobileService.SyncContext.PushAsync();
+       //     await todoTable.PullAsync("todoItems", todoTable.CreateQuery());
+       // }
 
         #endregion 
     }

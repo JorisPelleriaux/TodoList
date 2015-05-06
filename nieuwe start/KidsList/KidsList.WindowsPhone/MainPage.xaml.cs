@@ -19,7 +19,7 @@ using Windows.UI.Xaml.Navigation;
 
 namespace KidsList
 {
-    public sealed partial class MainPage : Page
+    sealed partial class MainPage : Page
     {
         private bool Login = false;
         private bool IsParent = false;
@@ -87,7 +87,14 @@ namespace KidsList
             await ControleLogin();
             if (Login == true)
             {
-                Frame.Navigate(typeof(ToDoList));
+                if (IsParent == true)
+                {
+                    Frame.Navigate(typeof(ToDoList), parents[0].Id);
+                }
+                 if (IsParent == false)
+                {
+                    Frame.Navigate(typeof(ToDoListKids));
+                }
             }
         }
 

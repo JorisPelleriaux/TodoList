@@ -15,10 +15,13 @@ namespace KidsList
         [JsonProperty(PropertyName = "complete")]
         public bool Complete { get; set; }
 
-        [JsonProperty(PropertyName = "Time")]
+        [JsonProperty(PropertyName = "time")]
         public string Time { get; set; }
 
-        [JsonProperty(PropertyName = "Date")]
+        [JsonProperty(PropertyName = "date")]
         public string Date { get; set; }
+
+        [JsonProperty(PropertyName = "idParent")]
+        public string IdParent { get; set; }
     }
 }
