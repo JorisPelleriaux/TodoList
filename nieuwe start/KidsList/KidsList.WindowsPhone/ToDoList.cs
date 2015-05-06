@@ -111,6 +111,7 @@ namespace KidsList
             //await InitLocalStoreAsync(); // offline sync
             IdParent = e.Parameter as string;
             await RefreshTodoItems();
+            IdParent = e.Parameter as string;
         }
 
 
