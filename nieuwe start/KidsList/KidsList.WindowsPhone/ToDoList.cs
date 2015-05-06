@@ -91,12 +91,10 @@ namespace KidsList
 
             ButtonRefresh.IsEnabled = true;
         }
-       
 
         private async void ButtonSave_Click(object sender, RoutedEventArgs e)
         {
-
-            var todoItem = new TodoItem { Text = addTaskBox.Text, Time = choseTime.Time.ToString(), Date = choseDate.Date.ToString("yyyy-MM-dd") };
+            var todoItem = new TodoItem { Text = addTaskBox.Text, Time = choseTime.Time.ToString(), Date = choseDate.Date.ToString()};
             await InsertTodoItem(todoItem);
         }
 
