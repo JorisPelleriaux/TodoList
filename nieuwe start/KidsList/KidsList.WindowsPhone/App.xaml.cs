@@ -8,6 +8,7 @@ using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Phone.UI.Input;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -15,10 +16,6 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-using Microsoft.WindowsAzure.Storage;
-using Microsoft.WindowsAzure.Storage.Auth;
-using Microsoft.WindowsAzure.Storage.Blob;
-
 
 namespace KidsList
 {
@@ -27,8 +24,6 @@ namespace KidsList
     /// </summary>
     sealed partial class App : Application
     {
-        private static readonly StorageCredentials cred = new StorageCredentials("audiostorage", "a7rLdAdKwgnJijdZTrE5slrN3DK3fBbMwyVoQruTb/y3OHM4IXTUDql5dk15MR6WSzc/E0ovX4ZzqiqwcDkw+w==");
-        public static readonly CloudBlobContainer container = new CloudBlobContainer(new Uri("https://audiostorage.blob.core.windows.net/audio"), cred); 
 
         // This MobileServiceClient has been configured to communicate with your local
         // test project for debugging purposes.
@@ -105,8 +100,6 @@ namespace KidsList
             Window.Current.Activate();
         }
 
-       
-
         /// <summary>
         /// Invoked when Navigation to a certain page fails
         /// </summary>
@@ -129,6 +122,20 @@ namespace KidsList
             var deferral = e.SuspendingOperation.GetDeferral();
             //TODO: Save application state and stop any background activity
             deferral.Complete();
+        }
+        private void HardwareButtons_BackPressed(object sender, BackPressedEventArgs e)
+        {
+            Frame frame = Window.Current.Content as Frame;
+            if (frame == null)
+            {
+                return;
+            }
+
+            if (frame.CanGoBack)
+            {
+                frame.GoBack();
+                e.Handled = true;
+            }
         }
     }
 }

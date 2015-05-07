@@ -10,7 +10,6 @@ using Windows.Media;
 using Windows.Media.Capture;
 using Windows.Media.MediaProperties;
 using Windows.Storage;
-using Windows.Storage.Pickers;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -19,10 +18,6 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-using Microsoft.WindowsAzure.Storage;
-using Microsoft.WindowsAzure.Storage.Auth;
-using Microsoft.WindowsAzure.Storage.Blob;
-
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkID=390556
 
@@ -39,38 +34,12 @@ namespace KidsList
         private bool _userRequestedRaw;
         private bool _rawAudioSupported;
 
-        private string accountName = "audiostorage";
-        private string accountKey = "a7rLdAdKwgnJijdZTrE5slrN3DK3fBbMwyVoQruTb/y3OHM4IXTUDql5dk15MR6WSzc/E0ovX4ZzqiqwcDkw+w==";
-
-        
-
-        public async void VoiceRecorder()
+        public VoiceRecorder()
         {
             this.InitializeComponent();
 
             this.NavigationCacheMode = NavigationCacheMode.Required;
             InitializeAudioRecording();
-          
-          /*  try
-            {
-                StorageCredentials creds = new StorageCredentials(accountName, accountKey);
-                CloudStorageAccount account = new CloudStorageAccount(creds, useHttps: true);
-
-                CloudBlobClient client = account.CreateCloudBlobClient();
-
-                CloudBlobContainer samplecontainer = client.GetContainerReference("samples");
-                
-                await samplecontainer.CreateIfNotExistsAsync();
-
-                CloudBlockBlob blob = samplecontainer.GetBlockBlobReference("audiofile.m4a");
-                using (Stream file = System.IO.File.Openread())
-                {
-                    blob.UploadFromStreamAsync(file);
-                    
-
-                }
-
-            } */
         }
 
         /// <summary>
@@ -131,7 +100,7 @@ namespace KidsList
             }
             catch (Exception e)
             {
-                Debug.WriteLine("Failed to capture audio");
+                Debug.WriteLine(e);
             }
         }
 

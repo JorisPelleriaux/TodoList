@@ -53,6 +53,7 @@
         <TextBlock Grid.Row="3" Grid.ColumnSpan="2" Margin="15" Text="Confirm password" FontSize="20"></TextBlock>
         <PasswordBox Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Right" Margin="10" Width="200" Name="ConfPassword"></PasswordBox>
 
-        <Button Grid.Row="4" Grid.Column="1" HorizontalAlignment="Center" Content="Next" Click="Button_Click" Name="ButtonSaveParent"></Button>
+        <Button Grid.Row="4" Grid.Column="2" HorizontalAlignment="Left" Content="Next" Click="Next_Click" Name="ButtonSaveParent"></Button>
+        <Button Grid.Row="4" Grid.Column="0" HorizontalAlignment="Right" Content="Back" Click="BackParents_Click" Name="BackToMainpage"></Button>
     </Grid>
 </Page>

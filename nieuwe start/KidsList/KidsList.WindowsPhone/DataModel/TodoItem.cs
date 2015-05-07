@@ -17,5 +17,11 @@ namespace KidsList
 
         [JsonProperty(PropertyName = "time")]
         public string Time { get; set; }
+
+        [JsonProperty(PropertyName = "date")]
+        public string Date { get; set; }
+
+        [JsonProperty(PropertyName = "idParent")]
+        public string IdParent { get; set; }
     }
 }

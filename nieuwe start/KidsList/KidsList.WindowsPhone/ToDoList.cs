@@ -8,6 +8,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 
+
 // To add offline sync support, add the NuGet package Microsoft.WindowsAzure.MobileServices.SQLiteStore
 // to your project. Then, uncomment the lines marked // offline sync
 // For more information, see: http://aka.ms/addofflinesync
@@ -16,11 +17,12 @@ using Windows.UI.Xaml.Navigation;
 
 namespace KidsList
 {
-    sealed partial class ToDoList: Page
+    public sealed partial class ToDoList : Page
     {
-        
-        
+        private string IdParent;
         private MobileServiceCollection<TodoItem, TodoItem> items;
+        private MobileServiceCollection<Child, Child> children;
+        private IMobileServiceTable<Child> childrenTable = App.MobileService.GetTable<Child>();
         private IMobileServiceTable<TodoItem> todoTable = App.MobileService.GetTable<TodoItem>();
        
 
@@ -30,7 +32,7 @@ namespace KidsList
         {
             this.InitializeComponent();
         }
-
+  
         private async Task InsertTodoItem(TodoItem todoItem)
         {
             // This code inserts a new TodoItem into the database. When the operation completes
@@ -40,7 +42,7 @@ namespace KidsList
 
             //await SyncAsync(); // offline sync
         }
-
+           
         private async Task RefreshTodoItems()
         {
             MobileServiceInvalidOperationException exception = null;
@@ -52,6 +54,7 @@ namespace KidsList
                 // The query excludes completed TodoItems
                 items = await todoTable
                     .Where(todoItem => todoItem.Complete == false)
+                    .Where(todoItem => todoItem.IdParent == IdParent)
                     .ToCollectionAsync();
             }
             catch (MobileServiceInvalidOperationException e)
@@ -78,7 +81,7 @@ namespace KidsList
             items.Remove(item);
             ListItems.Focus(Windows.UI.Xaml.FocusState.Unfocused);
 
-            //await SyncAsync(); // offline sync
+           // await SyncAsync(); // offline sync
         }
 
         private async void ButtonRefresh_Click(object sender, RoutedEventArgs e)
@@ -93,7 +96,8 @@ namespace KidsList
 
         private async void ButtonSave_Click(object sender, RoutedEventArgs e)
         {
-            var todoItem = new TodoItem { Text = addTaskBox.Text, Time = choseTime.Time.ToString()  };
+            
+            var todoItem = new TodoItem { Text = addTaskBox.Text, Time = choseTime.Time.ToString(), Date = choseDate.Date.ToString("dd-MM-yyyy"), IdParent = IdParent };
             await InsertTodoItem(todoItem);
         }
 
@@ -107,28 +111,43 @@ namespace KidsList
         protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
             //await InitLocalStoreAsync(); // offline sync
+            IdParent = e.Parameter as string;
             await RefreshTodoItems();
+            getChild();
+            
+        }
+
+        private async void getChild()
+        {
+            children = await childrenTable                   
+                   .Where(child => child.IdParent == IdParent)
+                   .ToCollectionAsync();
+            foreach (var c in children)
+            {
+                amountKidsList.Items.Add(c.Name);
+            }
+            
         }
 
         #region Offline sync
 
-        //private async Task InitLocalStoreAsync()
-        //{
+       // private async Task InitLocalStoreAsync()
+       // {
         //    if (!App.MobileService.SyncContext.IsInitialized)
         //    {
-        //        var store = new MobileServiceSQLiteStore("localstore.db");
-        //        store.DefineTable<TodoItem>();
-        //        await App.MobileService.SyncContext.InitializeAsync(store);
+        //       var store = new MobileServiceSQLiteStore("localstore.db");
+        //       store.DefineTable<TodoItem>();
+        //       await App.MobileService.SyncContext.InitializeAsync(store);
         //    }
         //
         //    await SyncAsync();
-        //}
+       // }
 
-        //private async Task SyncAsync()
-        //{
-        //    await App.MobileService.SyncContext.PushAsync();
-        //    await todoTable.PullAsync("todoItems", todoTable.CreateQuery());
-        //}
+      //  private async Task SyncAsync()
+       // {
+       //     await App.MobileService.SyncContext.PushAsync();
+       //     await todoTable.PullAsync("todoItems", todoTable.CreateQuery());
+       // }
 
         #endregion 
     }

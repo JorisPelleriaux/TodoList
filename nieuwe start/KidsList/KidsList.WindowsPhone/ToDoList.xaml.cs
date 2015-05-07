@@ -26,5 +26,15 @@ namespace KidsList
         {
             Frame.Navigate(typeof(ParentRegister));
         }
+
+        private void ListItems_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void Image_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(VoiceRecorder));
+        }
     }
 }
