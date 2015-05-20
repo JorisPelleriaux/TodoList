@@ -9,14 +9,38 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
-        <ListView  Name="ListItems" SelectionChanged="ListItems_SelectionChanged">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="3*"></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.Background>
+            <ImageBrush ImageSource="Assets/todolist.png"></ImageBrush>
+        </Grid.Background>
+
+        <ListView  Name="ListItems" SelectionChanged="ListItems_SelectionChanged" Margin="31,121,0,0">
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <StackPanel Orientation="Horizontal">
-                        <CheckBox Name="CheckBoxComplete" IsChecked="{Binding Complete, Mode=TwoWay}" Checked="CheckBoxComplete_Checked" Content="{Binding Text}" Margin="10,5" VerticalAlignment="Center"/>
-                    </StackPanel>
+                    <CheckBox Background="Black" Name="CheckBoxComplete" IsChecked="{Binding Complete, Mode=TwoWay}" Checked="CheckBoxComplete_Checked" Foreground="Black"  Content="{Binding Text}" Margin="-7" VerticalAlignment="Center"/>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
+        <ListView  Name="ListTime" SelectionChanged="ListItems_SelectionChanged" Margin="217,136,5,0" Grid.ColumnSpan="2">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+
+                    <TextBox IsReadOnly="True" Background="Transparent" FontSize="15" BorderThickness="0" Name="Time" Margin="20,0,0,9" Text="{Binding Time}"></TextBox>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <ListView  Name="ListDate" SelectionChanged="ListItems_SelectionChanged" Grid.Column="1" Margin="43,136,0,0" Grid.ColumnSpan="2">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+
+                    <TextBox IsReadOnly="True" Background="Transparent" FontSize="15" BorderThickness="0" Name="Date" Margin="20,0,0,9" Text="{Binding Date}"></TextBox>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <Button Grid.ColumnSpan="3" Background="Salmon" Foreground="White" Name="Refresh" Content="Refresh items" VerticalAlignment="Bottom" Margin="10" HorizontalAlignment="Stretch" Click="Refresh_Click"></Button>
     </Grid>
 </Page>

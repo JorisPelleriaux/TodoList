@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/2010/manifest" xmlns:m2="http://schemas.microsoft.com/appx/2013/manifest" xmlns:m3="http://schemas.microsoft.com/appx/2014/manifest" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest">
-  <Identity Name="1010e1f1-6014-4024-afb5-e54464d2e64b" Publisher="CN=test" Version="1.0.0.0" />
-  <mp:PhoneIdentity PhoneProductId="1010e1f1-6014-4024-afb5-e54464d2e64b" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
+  <Identity Name="13892ea2ict.schoolproject2ea2015" Publisher="CN=074E7FDA-B0A4-4078-92D5-AA2D1C51448A" Version="1.0.0.0" />
+  <mp:PhoneIdentity PhoneProductId="448d4958-9b8c-4165-92be-806b0306930b" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
-    <DisplayName>KidsList.WindowsPhone</DisplayName>
-    <PublisherDisplayName>Mobile Services</PublisherDisplayName>
+    <DisplayName>schoolproject2ea2015</DisplayName>
+    <PublisherDisplayName>ea2ict</PublisherDisplayName>
     <Logo>Assets\storelogo.png</Logo>
   </Properties>
   <Prerequisites>
@@ -16,15 +16,21 @@
   </Resources>
   <Applications>
     <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="KidsList.WindowsPhone.App">
-      <m3:VisualElements DisplayName="KidsList" Square150x150Logo="Assets\logo.png" Square44x44Logo="Assets\smalllogo.png" Description="KidsList" ForegroundText="light" BackgroundColor="transparent">
+      <m3:VisualElements DisplayName="KidsList" Square150x150Logo="Assets\logo.png" Square44x44Logo="Assets\smalllogo.png" Description="KidsList" ForegroundText="light" BackgroundColor="transparent" ToastCapable="true">
         <m3:DefaultTile Wide310x150Logo="Assets\widelogo.png" Square71x71Logo="Assets\square.png">
         </m3:DefaultTile>
         <m3:SplashScreen Image="Assets\splashscreen.png" />
+        <m3:InitialRotationPreference>
+          <m3:Rotation Preference="portrait" />
+        </m3:InitialRotationPreference>
       </m3:VisualElements>
     </Application>
   </Applications>
   <Capabilities>
     <Capability Name="internetClientServer" />
+    <Capability Name="musicLibrary" />
+    <Capability Name="removableStorage" />
+    <Capability Name="picturesLibrary" />
     <Capability Name="videosLibrary" />
     <DeviceCapability Name="microphone" />
   </Capabilities>

@@ -8,15 +8,12 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    
-        <Grid>
+    <Grid>
         <TextBlock Name="title" Text="Kids List" FontSize="20"></TextBlock>
-            <MediaElement x:Name="playbackElement1" ></MediaElement>
-            <Button x:Name="CaptureButton" Content="Capture Audio" HorizontalAlignment="Center" Margin="29,35,226,0" VerticalAlignment="Top" Click="CaptureButton_Click" Width="145"/>
-            <Button x:Name="StopCaptureButton" Visibility="Collapsed" Content="Stop Capture" HorizontalAlignment="Center" Margin="0,284,0,0" VerticalAlignment="Top" Click="StopCaptureButton_Click" Width="145"/>
-            <Button x:Name="PlayRecordButton" Visibility="Collapsed" Content="Play Capture" HorizontalAlignment="Center" Margin="0,380,0,0" VerticalAlignment="Top" Click="PlayRecordButton_Click" Width="145"/>
-            <Image Name="micpng" Source="Assets/microphone.png" Height="200"></Image>
-            <Image Name="listpng" Source="Assets/todolist.png" Height="400" Width="200"></Image>
-        </Grid>
-    
+        <MediaElement x:Name="playbackElement1" ></MediaElement>
+        <Button x:Name="CaptureButton" Content="Capture Audio" HorizontalAlignment="Center" Margin="29,35,226,0" VerticalAlignment="Top" Click="CaptureButton_Click"  Width="145"/>
+        <Button x:Name="StopCaptureButton" Content="Stop Capture" HorizontalAlignment="Center" Margin="226,35,29,0" VerticalAlignment="Top" Click="StopCaptureButton_Click" Width="145"/>
+        <Button x:Name="PlayRecordButton" Content="Play Capture" HorizontalAlignment="Center" Margin="29,537,226,0" VerticalAlignment="Top" Click="PlayRecordButton_Click" Width="145"/>
+        <Image Name="micpng" Source="Assets/microphone.png" Height="200"></Image>
+    </Grid>
 </Page>

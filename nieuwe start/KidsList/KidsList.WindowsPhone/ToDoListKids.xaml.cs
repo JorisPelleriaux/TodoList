@@ -1,4 +1,5 @@
-﻿using Microsoft.WindowsAzure.MobileServices;
+﻿using KidsList.Common;
+using Microsoft.WindowsAzure.MobileServices;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -25,13 +26,37 @@ namespace KidsList
     /// </summary>
     public sealed partial class ToDoListKids : Page
     {
-        private string IdParent;
+        private string IdChild;
         private MobileServiceCollection<TodoItem, TodoItem> items;
         private IMobileServiceTable<TodoItem> todoTable = App.MobileService.GetTable<TodoItem>();
+        private NavigationHelper navigationHelper;
+        private ObservableDictionary defaultViewModel = new ObservableDictionary();
         public ToDoListKids()
         {
             this.InitializeComponent();
+            this.navigationHelper = new NavigationHelper(this);
+            this.navigationHelper.LoadState += this.NavigationHelper_LoadState;
+            this.navigationHelper.SaveState += this.NavigationHelper_SaveState;
         }
+
+        public NavigationHelper NavigationHelper
+        {
+            get { return this.navigationHelper; }
+        }
+
+        public ObservableDictionary DefaultViewModel
+        {
+            get { return this.defaultViewModel; }
+        }
+
+        private void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
+        {
+        }
+
+        private void NavigationHelper_SaveState(object sender, SaveStateEventArgs e)
+        {
+        }
+
         private async Task UpdateCheckedTodoItem(TodoItem item)
         {
             // This code takes a freshly completed TodoItem and updates the database. When the MobileService 
@@ -39,11 +64,13 @@ namespace KidsList
             await todoTable.UpdateAsync(item);
             items.Remove(item);
             ListItems.Focus(Windows.UI.Xaml.FocusState.Unfocused);
+           await RefreshTodoItems();
 
             //await SyncAsync(); // offline sync
         }
 
-        private async Task RefreshTodoItems()
+ 
+        public async Task RefreshTodoItems()
         {
             MobileServiceInvalidOperationException exception = null;
             try
@@ -53,7 +80,9 @@ namespace KidsList
                 // The query excludes completed TodoItems
                 items = await todoTable
                     .Where(todoItem => todoItem.Complete == false) 
-                    .Where(todoItem => todoItem.IdParent == IdParent)
+                    .Where(todoItem => todoItem.IdChild == IdChild)
+                    .OrderBy(todoItem => todoItem.Time)
+                    .OrderBy(todoItem => todoItem.Date)
                     .ToCollectionAsync();
             }
             catch (MobileServiceInvalidOperationException e)
@@ -68,18 +97,19 @@ namespace KidsList
             else
             {
                 ListItems.ItemsSource = items;
-                
+                ListTime.ItemsSource = items;
+                ListDate.ItemsSource = items;
             }
         }
-        /// <summary>
-        /// Invoked when this page is about to be displayed in a Frame.
-        /// </summary>
-        /// <param name="e">Event data that describes how this page was reached.
-        /// This parameter is typically used to configure the page.</param>
+        public static async  void test()
+        {
+            await new MessageDialog("het werkt").ShowAsync();
+        }
         protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
+            IdChild = e.Parameter as string;
             await RefreshTodoItems();
-            IdParent = e.Parameter as string;
+            
         }
 
         private void ListItems_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -87,11 +117,16 @@ namespace KidsList
 
         }
 
-        private async void CheckBoxComplete_Checked(object sender, RoutedEventArgs e)
+        public async void CheckBoxComplete_Checked(object sender, RoutedEventArgs e)
         {
             CheckBox cb = (CheckBox)sender;
             TodoItem item = cb.DataContext as TodoItem;
             await UpdateCheckedTodoItem(item);
+        }
+
+        private async void Refresh_Click(object sender, RoutedEventArgs e)
+        {
+            await RefreshTodoItems();
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Microsoft.WindowsAzure.MobileServices;
+﻿using Microsoft.WindowsAzure.Messaging;
+using Microsoft.WindowsAzure.MobileServices;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -8,7 +9,9 @@ using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Networking.PushNotifications;
 using Windows.Phone.UI.Input;
+using Microsoft.WindowsAzure.Notifications;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -24,7 +27,14 @@ namespace KidsList
     /// </summary>
     sealed partial class App : Application
     {
+        
+        // http://go.microsoft.com/fwlink/?LinkId=290986&clcid=0x409
+        public static Microsoft.WindowsAzure.MobileServices.MobileServiceClient KidsListClient = new Microsoft.WindowsAzure.MobileServices.MobileServiceClient(
+        "https://kidslist.azure-mobile.net/",
+        "LIvhiOaaECUZQfozduynGmJGyhazay72");
 
+
+        
         // This MobileServiceClient has been configured to communicate with your local
         // test project for debugging purposes.
         //public static MobileServiceClient MobileService = new MobileServiceClient(
@@ -85,10 +95,12 @@ namespace KidsList
                     //TODO: Load state from previously suspended application
                 }
 
+             
+
                 // Place the frame in the current Window
                 Window.Current.Content = rootFrame;
             }
-
+            
             if (rootFrame.Content == null)
             {
                 // When the navigation stack isn't restored navigate to the first page,
@@ -98,6 +110,9 @@ namespace KidsList
             }
             // Ensure the current window is active
             Window.Current.Activate();
+            // http://go.microsoft.com/fwlink/?LinkId=290986&clcid=0x409
+            KidsList.KidsListPush.UploadChannel();
+            
         }
 
         /// <summary>

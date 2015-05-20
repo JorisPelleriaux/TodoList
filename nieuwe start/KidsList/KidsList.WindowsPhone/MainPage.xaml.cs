@@ -63,6 +63,8 @@ namespace KidsList
                             IsParent = true;
                             await new MessageDialog("Welcome " + parents[0].Name).ShowAsync();
                         }
+                        else
+                            await new MessageDialog("Incorrect username or password").ShowAsync();
                     }
                     if (parents.Count <= 0)
                     {
@@ -89,18 +91,25 @@ namespace KidsList
             {
                 if (IsParent == true)
                 {
-                    Frame.Navigate(typeof(ToDoList), parents[0].Id);
+                    Frame.Navigate(typeof(ToDoListParents), parents[0].Id);
                 }
                  if (IsParent == false)
                 {
-                    Frame.Navigate(typeof(ToDoListKids));
+                    Frame.Navigate(typeof(ToDoListKids), children[0].Id);
                 }
             }
         }
 
         private void Register_Click(object sender, RoutedEventArgs e)
         {
-            Frame.Navigate(typeof(ParentRegister));
+            Frame.Navigate(typeof(ParentRegister));            
+        }
+
+
+
+        private void username_PointerEntered(object sender, PointerRoutedEventArgs e)
+        {
+            username.Text = "";
         }
     }
 }

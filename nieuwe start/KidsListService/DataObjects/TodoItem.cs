@@ -13,5 +13,7 @@ namespace KidsListService.DataObjects
         public string Date { get; set; }
 
         public string IdParent { get; set; }
+
+        public string IdChild { get; set; }
     }
 }

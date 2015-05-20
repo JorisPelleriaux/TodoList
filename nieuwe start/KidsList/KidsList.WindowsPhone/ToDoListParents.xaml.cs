@@ -26,17 +26,18 @@ namespace KidsList
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class ParentRegister : Page
+    public sealed partial class ToDoListParents : Page
     {
-        private bool AlreadyExist = false;
-        public string nummer { get; set; }
-
-        private MobileServiceCollection<Parent, Parent> parents;
-        private IMobileServiceTable<Parent> ParentTable = App.MobileService.GetTable<Parent>();
         private NavigationHelper navigationHelper;
         private ObservableDictionary defaultViewModel = new ObservableDictionary();
+        private string IdParent;
+        string LocalChildId;
+        private MobileServiceCollection<TodoItem, TodoItem> items;
+        private MobileServiceCollection<Child, Child> children;
+        private IMobileServiceTable<Child> childrenTable = App.MobileService.GetTable<Child>();
+        private IMobileServiceTable<TodoItem> todoTable = App.MobileService.GetTable<TodoItem>();
 
-        public ParentRegister()
+        public ToDoListParents()
         {
             this.InitializeComponent();
 
@@ -89,62 +90,105 @@ namespace KidsList
         {
         }
 
-        private async Task InsertParent(Parent parent)
+        private async void Image_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            if (amountKidsList.SelectedIndex == -1)
+            {
+                await new MessageDialog("Please select a child").ShowAsync();
+            }
+            else
+            Frame.Navigate(typeof(VoiceRecorder));
+        }
+
+        private async Task InsertTodoItem(TodoItem todoItem)
         {
             // This code inserts a new TodoItem into the database. When the operation completes
             // and Mobile Services has assigned an Id, the item is added to the CollectionView
-            await ParentTable.InsertAsync(parent);
+            await todoTable.InsertAsync(todoItem);
             //await SyncAsync(); // offline sync
         }
 
-        private async void CreateNewParent()
+        private async Task RefreshTodoItems()
         {
-            if (NameParents.Text != "" && EmailParents.Text != "" && UsernameParents.Text != "" && PasswordParents.Password != "")
+            foreach (var child in children)
             {
-                if (PasswordParents.Password.Equals(ConfPassword.Password))
+                if (child.Name == amountKidsList.SelectedItem)
                 {
-                    if (AlreadyExist == false)
-                    {
-                        nummer = Guid.NewGuid().ToString();
-
-                        var parent1 = new Parent { Id = nummer, Name = NameParents.Text, Email = EmailParents.Text, Phonenumber = PhonenumberParents.Text, Username = UsernameParents.Text, Password = PasswordParents.Password };
-                        await InsertParent(parent1);
-                        Frame.Navigate(typeof(ChildRegister), nummer);
-                    }
-                    else if (AlreadyExist == true)
-                        await new MessageDialog("Username already exists").ShowAsync();
-                }
-                else if (!PasswordParents.Password.Equals(ConfPassword.Password))
-                {
-                    await new MessageDialog("Your password and confirmation password do not match.").ShowAsync();
+                    LocalChildId = child.Id;
                 }
             }
-            else if (NameParents.Text == "" || EmailParents.Text == "" || UsernameParents.Text == "" || PasswordParents.Password == "")
+
+            MobileServiceInvalidOperationException exception = null;
+
+            // This code refreshes the entries in the list view by querying the TodoItems table.
+            // The query excludes completed TodoItems
+            items = await todoTable
+                .Where(todoItem => todoItem.Complete == false)
+                .Where(todoItem => todoItem.IdChild == LocalChildId)
+                .ToCollectionAsync();
+
+            if (items.Count == 0)
             {
-                await new MessageDialog("please fill in the required fields").ShowAsync();
+                await new MessageDialog("all tasks completed").ShowAsync();
+            }
+            if (exception != null)
+            {
+                await new MessageDialog(exception.Message, "Error loading items").ShowAsync();
+            }
+            else
+            {
+                ListItems.ItemsSource = items;
+                this.ButtonSave.IsEnabled = true;
             }
         }
 
-        private async Task CheckAlreadyExists()
+        private async Task UpdateCheckedTodoItem(TodoItem item)
         {
+            // This code takes a freshly completed TodoItem and updates the database. When the MobileService 
+            // responds, the item is removed from the list 
+            await todoTable.UpdateAsync(item);
+            items.Remove(item);
+            ListItems.Focus(Windows.UI.Xaml.FocusState.Unfocused);
 
-            parents = await ParentTable
-                          .Where(Parent => Parent.Username == UsernameParents.Text)
-                          .ToCollectionAsync();
+            // await SyncAsync(); // offline sync
+        }
 
-            if (parents.Count > 0 && parents[0].Username == UsernameParents.Text)
+        private async void ButtonSave_Click(object sender, RoutedEventArgs e)
+        {
+            var todoItem = new TodoItem { Text = addTaskBox.Text, Time = choseTime.Time.ToString(), Date = choseDate.Date.ToString("dd-MM-yyyy"), IdChild = LocalChildId };
+            await InsertTodoItem(todoItem);
+            await RefreshTodoItems();
+        }
+
+        private async void CheckBoxComplete_Checked(object sender, RoutedEventArgs e)
+        {
+            CheckBox cb = (CheckBox)sender;
+            TodoItem item = cb.DataContext as TodoItem;
+            await UpdateCheckedTodoItem(item);
+        }
+
+        private async void amountKidsList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            this.ButtonSave.IsEnabled = true;
+            await RefreshTodoItems();
+        }
+
+        private async void getChild()
+        {
+            children = await childrenTable
+                   .Where(child => child.IdParent == IdParent)
+                   .ToCollectionAsync();
+            foreach (var c in children)
             {
-                AlreadyExist = true;
+                amountKidsList.Items.Add(c.Name);
             }
-            else if (parents.Count <= 0)
-                AlreadyExist = false;
         }
 
-        private async void Next_Click(object sender, RoutedEventArgs e)
+        private void Page_Loaded_1(object sender, RoutedEventArgs e)
         {
-            await CheckAlreadyExists();
-            CreateNewParent();
+            getChild();
         }
+
         #region NavigationHelper registration
 
         /// <summary>
@@ -162,7 +206,9 @@ namespace KidsList
         /// handlers that cannot cancel the navigation request.</param>
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
+            IdParent = e.Parameter as string;
             this.navigationHelper.OnNavigatedTo(e);
+            //await InitLocalStoreAsync(); // offline sync
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
@@ -171,5 +217,29 @@ namespace KidsList
         }
 
         #endregion
+
+
+
+        #region Offline sync
+
+        // private async Task InitLocalStoreAsync()
+        // {
+        //    if (!App.MobileService.SyncContext.IsInitialized)
+        //    {
+        //       var store = new MobileServiceSQLiteStore("localstore.db");
+        //       store.DefineTable<TodoItem>();
+        //       await App.MobileService.SyncContext.InitializeAsync(store);
+        //    }
+        //
+        //    await SyncAsync();
+        // }
+
+        //  private async Task SyncAsync()
+        // {
+        //     await App.MobileService.SyncContext.PushAsync();
+        //     await todoTable.PullAsync("todoItems", todoTable.CreateQuery());
+        // }
+
+        #endregion 
     }
 }

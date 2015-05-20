@@ -8,8 +8,11 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    
+
     <Grid>
+        <Grid.Background>
+            <ImageBrush ImageSource="Assets/to-do-list-pic.jpg"></ImageBrush>
+        </Grid.Background>
         <Grid.RowDefinitions>
             <RowDefinition>
 
@@ -36,22 +39,22 @@
         </Grid.ColumnDefinitions>
         <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
             <StackPanel HorizontalAlignment="Right">
-                
-                
+
+
 
             </StackPanel>
             <StackPanel VerticalAlignment="Top">
-                
-                
-                
+
+
+
             </StackPanel>
-            
+
         </Grid>
-        <TextBlock Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="3" VerticalAlignment="Center" FontSize="55"  Height="60">Kids List</TextBlock>
-        <TextBox Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" VerticalAlignment="Top"  Margin="10" Height="5" Width="200" Name="username" Text="Username"></TextBox>
-        <PasswordBox  Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" VerticalAlignment="Bottom"  Margin="10" Width="250" Height="5" Name="password" ></PasswordBox>
-        <Button HorizontalAlignment="Center" Grid.ColumnSpan="2" Grid.Column="0" Grid.Row="2" Click="Register_Click">Register</Button>
-        <Button HorizontalAlignment="Center" Grid.ColumnSpan="2" Grid.Column="2" Grid.Row="2" Width="10" Click="Login_Click">Login</Button>
-        <Image Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" Height="100" Width="200" Source="Assets/Cool.png"></Image>
+
+        <TextBox  Background="Salmon" Foreground="Black" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" VerticalAlignment="Bottom"  Margin="15,0,10,14.667" Height="5" Name="username" Text="Username" PointerEntered="username_PointerEntered"/>
+        <PasswordBox  Background="Salmon" Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="2" VerticalAlignment="Top"  Margin="15,15.333,10,0" Height="5" Name="password" />
+        <Button Foreground="Black" Background="Salmon" VerticalAlignment="Bottom" HorizontalAlignment="Center" Grid.ColumnSpan="2" Grid.Column="0" Grid.Row="2" Click="Register_Click">Register</Button>
+        <Button Foreground="Black" Background="Salmon" VerticalAlignment="Bottom" HorizontalAlignment="Center" Grid.ColumnSpan="2" Grid.Column="2" Grid.Row="2" Width="10" Click="Login_Click">Login</Button>
+
     </Grid>
 </Page>
